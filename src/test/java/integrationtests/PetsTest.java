@@ -35,6 +35,7 @@ public class PetsTest extends IntegrationTest {
         Assert.assertTrue(HttpStatus.OK.equals(responseEntity.getStatusCode()));
 
         Pet savedPet = responseEntity.getBody();
+
         Assert.assertTrue(savedPet != null);
         Assert.assertTrue(savedPet.getTitle().equals(originalPet.getTitle()));
         Assert.assertTrue(savedPet.getDescription().equals(originalPet.getDescription()));
