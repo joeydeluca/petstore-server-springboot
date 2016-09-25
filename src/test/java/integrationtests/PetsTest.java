@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 /**
  * Created by Joe Deluca on 9/21/2016.
  */
-public class PetsTest extends IntegrationTest {
+public class PetsTest extends AbstractIntegrationTest {
 
     @Autowired
     private PetRepository petRepository;
