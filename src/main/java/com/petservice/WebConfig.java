@@ -24,7 +24,7 @@ public class WebConfig {
                 registry.addMapping("/**")
                 .allowedHeaders("*")
                 .allowedMethods("*")
-                .exposedHeaders("Authorization");
+                        .exposedHeaders("Authorization");
             }
         };
     }
