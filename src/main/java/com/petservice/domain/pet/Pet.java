@@ -15,6 +15,11 @@ import javax.validation.constraints.Size;
 @Entity
 public class Pet extends DomainEntity {
 
+    public Pet() {
+        // Just until we have photo upload
+        setPhotoUrl("http://www.freedigitalphotos.net/images/img/homepage/87357.jpg");
+    }
+
     @NotNull
     @Size(min = 3, max = 50)
     @Column

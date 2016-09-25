@@ -38,18 +38,16 @@ public class PetServiceApplication implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        // Add initial user accounts
-        userRepository.save(new User("admin", "admin", Role.ROLE_ADMIN));
-        userRepository.save(new User("guest", "guest", Role.ROLE_GUEST));
-
         // Add some test data if we are not in prod
         if(!Arrays.asList(environment.getActiveProfiles()).contains("prod")) {
+            userRepository.save(new User("admin", "admin", Role.ROLE_ADMIN));
+            userRepository.save(new User("guest", "guest", Role.ROLE_GUEST));
+
             Stream.iterate(0, i -> i + 1).limit(10).forEach(i -> {
                 Pet pet = new Pet();
                 pet.setTitle("Cool Pet " + i);
                 pet.setDescription("this is a really cool pet description. blah blah blah blah " + i);
                 pet.setPetType(PetType.DOG);
-                pet.setPhotoUrl("http://www.freedigitalphotos.net/images/img/homepage/87357.jpg");
                 pet.setPurchasePrice(i);
                 petRepository.save(pet);
             });
