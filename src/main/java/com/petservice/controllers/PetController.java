@@ -8,7 +8,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Joe Deluca on 9/21/2016.
@@ -57,6 +63,8 @@ public class PetController {
     )
     public ResponseEntity<Pet> create(@RequestBody Pet pet) {
 
+        validateEntity(pet);
+
         Pet savedPet = petService.save(pet);
 
         return ResponseEntity.ok(savedPet);
@@ -68,6 +76,8 @@ public class PetController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<Pet> update(@RequestBody Pet pet) {
+
+        validateEntity(pet);
 
         Pet savedPet = petService.save(pet);
 
@@ -85,6 +95,25 @@ public class PetController {
         petService.delete(id);
 
         return ResponseEntity.ok().build();
+    }
+
+    /**
+     * Execute jsr 303 validations
+     * @param pet
+     * @throws ValidationException
+     */
+    private void validateEntity(Pet pet) throws ValidationException {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+
+        Set<ConstraintViolation<Pet>> violations = validator.validate(pet);
+        if(violations.size() > 0) {
+            List<String> errors =  new ArrayList<>();
+            for (ConstraintViolation<Pet> violation : violations) {
+                errors.add(String.format("%s %s", violation.getPropertyPath(), violation.getMessage()));
+            }
+            throw new ValidationException(errors);
+        }
     }
 
 }

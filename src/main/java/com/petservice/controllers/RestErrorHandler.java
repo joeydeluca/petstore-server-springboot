@@ -1,5 +1,6 @@
 package com.petservice.controllers;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -24,9 +25,22 @@ public class RestErrorHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public ErrorResponse notFoundHandler(Exception e){
-        return new ErrorResponse(HttpStatus.NOT_FOUND, "Whatever you are looking for does not exist. " + e.getMessage());
+        return new ErrorResponse(HttpStatus.NOT_FOUND, "Whatever you are looking for does not exist.");
     }
 
+
+    @ExceptionHandler(
+            {
+                    ValidationException.class
+            }
+    )
+    @ResponseStatus(HttpStatus.PRECONDITION_FAILED)
+    @ResponseBody
+    public ErrorResponse validationHandler(ValidationException e) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.PRECONDITION_FAILED, "Validation Failed");
+        errorResponse.setDetails(e.getErrors());
+        return errorResponse;
+    }
 
     /**
      * For all other unhandled exceptions.

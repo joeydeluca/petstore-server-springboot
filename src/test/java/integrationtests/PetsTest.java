@@ -1,13 +1,9 @@
 package integrationtests;
 
 import com.petservice.domain.pet.Pet;
-import com.petservice.domain.pet.PetRepository;
 import com.petservice.domain.pet.PetType;
-import com.petservice.security.LoginDto;
 import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -17,9 +13,6 @@ import org.springframework.http.ResponseEntity;
  * Created by Joe Deluca on 9/21/2016.
  */
 public class PetsTest extends AbstractIntegrationTest {
-
-    @Autowired
-    private PetRepository petRepository;
 
     @Test
     public void saveNewPet() {

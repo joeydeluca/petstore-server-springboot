@@ -1,7 +1,8 @@
-package com.petservice.security;
+package com.petservice.controllers.dtos;
 
 /**
- * Created by Joe Deluca on 9/24/2016.
+ * Created by joseph.deluca of the House Targaryen, the first of his name. Coder of the Seven Kingdoms of Leonardo and Protector of the Realm, The Unburnt, Mother of Dragons, Breaker of Chains and Khaleesi of the Great Grass Sea.
+ * I created this file on 26/09/2016.
  */
 public class LoginDto {
     private String username;

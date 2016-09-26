@@ -12,11 +12,10 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
- * Created by Joe Deluca on 9/24/2016.
+ * Created by joseph.deluca of the House Targaryen, the first of his name. Coder of the Seven Kingdoms of Leonardo and Protector of the Realm, The Unburnt, Mother of Dragons, Breaker of Chains and Khaleesi of the Great Grass Sea.
+ * I created this file on 26/09/2016.
  */
-
 @Component
 public class UserDetailServiceImpl implements UserDetailsService {
 

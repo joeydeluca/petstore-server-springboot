@@ -1,15 +1,16 @@
 package integrationtests;
 
 import com.petservice.PetServiceApplication;
-import com.petservice.domain.pet.Pet;
-import com.petservice.security.LoginDto;
+import com.petservice.controllers.dtos.LoginDto;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -36,9 +37,9 @@ public abstract class AbstractIntegrationTest {
         loginDto.setUsername("admin");
         loginDto.setPassword("admin");
 
-        ResponseEntity<String> responseEntity1 = this.restTemplate.postForEntity("/login", loginDto, String.class);
-        if(responseEntity1.getStatusCode() == HttpStatus.OK) {
-            String authToken  = responseEntity1.getHeaders().getFirst("Authorization");
+        ResponseEntity<String> responseEntity = this.restTemplate.postForEntity("/login", loginDto, String.class);
+        if(responseEntity.getStatusCode() == HttpStatus.OK) {
+            String authToken  = responseEntity.getBody();
             authToken = authToken.replace("Bearer ", "");
             headers = new HttpHeaders();
             headers.add("Authorization", authToken);
