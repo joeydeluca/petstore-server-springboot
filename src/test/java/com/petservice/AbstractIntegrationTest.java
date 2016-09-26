@@ -1,8 +1,8 @@
-package integrationtests;
+package com.petservice;
 
-import com.petservice.PetServiceApplication;
 import com.petservice.controllers.dtos.LoginDto;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,12 +38,17 @@ public abstract class AbstractIntegrationTest {
         loginDto.setPassword("admin");
 
         ResponseEntity<String> responseEntity = this.restTemplate.postForEntity("/login", loginDto, String.class);
-        if(responseEntity.getStatusCode() == HttpStatus.OK) {
-            String authToken  = responseEntity.getBody();
-            authToken = authToken.replace("Bearer ", "");
-            headers = new HttpHeaders();
-            headers.add("Authorization", authToken);
-        }
+
+        Assert.assertTrue(responseEntity.getStatusCode() == HttpStatus.OK);
+
+        String authToken  = responseEntity.getBody();
+        authToken = authToken.replace("Bearer ", "");
+
+        Assert.assertNotNull(authToken);
+
+        headers = new HttpHeaders();
+        headers.add("Authorization", authToken);
+
     }
 
     public HttpHeaders getAuthHeaders() {

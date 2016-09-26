@@ -1,7 +1,5 @@
 package com.petservice.controllers;
 
-import com.petservice.domain.user.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -18,13 +16,6 @@ import javax.persistence.NoResultException;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-
-    private UserService userService;
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @RequestMapping(
             value = "/role",

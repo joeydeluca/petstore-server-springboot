@@ -1,5 +1,6 @@
 package com.petservice;
 
+import com.petservice.domain.user.Role;
 import com.petservice.security.AuthenticationTokenFilter;
 import com.petservice.security.EntryPointUnauthorizedHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 /**
- * Created by joseph.deluca of the House Targaryen, the first of his name. Coder of the Seven Kingdoms of Leonardo and Protector of the Realm, The Unburnt, Mother of Dragons, Breaker of Chains and Khaleesi of the Great Grass Sea.
+ * Created by joseph.deluca
  * I created this file on 26/09/2016.
  */
 @Configuration
@@ -76,9 +77,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/login/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/**").hasRole(Role.ROLE_ADMIN.getRoleName())
+                .antMatchers(HttpMethod.PUT, "/**").hasRole(Role.ROLE_ADMIN.getRoleName())
+                .antMatchers(HttpMethod.DELETE, "/**").hasRole(Role.ROLE_ADMIN.getRoleName())
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .anyRequest().permitAll();
 
