@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.persistence.NoResultException;
-import java.util.NoSuchElementException;
 
 /**
  * Created by Joe Deluca on 9/21/2016.
@@ -26,5 +25,17 @@ public class RestErrorHandler {
     @ResponseBody
     public ErrorResponse notFoundHandler(Exception e){
         return new ErrorResponse(HttpStatus.NOT_FOUND, "Whatever you are looking for does not exist. " + e.getMessage());
+    }
+
+
+    /**
+     * For all other unhandled exceptions.
+     * @param e
+     * @return
+     */
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler({Exception.class, RuntimeException.class})
+    public ErrorResponse handleResourceException(Exception e) {
+        return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error");
     }
 }
