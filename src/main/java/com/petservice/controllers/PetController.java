@@ -6,15 +6,14 @@ import com.petservice.domain.pet.PetType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Joe Deluca on 9/21/2016.
@@ -61,9 +60,9 @@ public class PetController {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Pet> create(@RequestBody Pet pet) {
+    public ResponseEntity<Pet> create(@Valid @RequestBody Pet pet, BindingResult bindingResult) {
 
-        validateEntity(pet);
+        validateEntity(bindingResult);
 
         Pet savedPet = petService.save(pet);
 
@@ -75,9 +74,9 @@ public class PetController {
             method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Pet> update(@RequestBody Pet pet) {
+    public ResponseEntity<Pet> update(@Valid @RequestBody Pet pet, BindingResult bindingResult) {
 
-        validateEntity(pet);
+        validateEntity(bindingResult);
 
         Pet savedPet = petService.save(pet);
 
@@ -98,19 +97,15 @@ public class PetController {
     }
 
     /**
-     * Execute jsr 303 validations
-     * @param pet
+     * Execute validations
+     * @param bindingResult
      * @throws ValidationException
      */
-    private void validateEntity(Pet pet) throws ValidationException {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-
-        Set<ConstraintViolation<Pet>> violations = validator.validate(pet);
-        if(violations.size() > 0) {
-            List<String> errors =  new ArrayList<>();
-            for (ConstraintViolation<Pet> violation : violations) {
-                errors.add(String.format("%s %s", violation.getPropertyPath(), violation.getMessage()));
+    private void validateEntity(BindingResult bindingResult) throws ValidationException {
+        if(bindingResult.hasErrors()) {
+            List<String> errors = new ArrayList<>();
+            for (ObjectError objectError : bindingResult.getAllErrors()) {
+                errors.add(String.format("%s %s", ((FieldError)objectError).getField(), objectError.getDefaultMessage()));
             }
             throw new ValidationException(errors);
         }
