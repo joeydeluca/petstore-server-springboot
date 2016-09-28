@@ -8,6 +8,7 @@ public class AuthenticationResponseDto {
     private String role;
 
     public AuthenticationResponseDto() {
+        // test
     }
 
     public AuthenticationResponseDto(String token, String role) {
