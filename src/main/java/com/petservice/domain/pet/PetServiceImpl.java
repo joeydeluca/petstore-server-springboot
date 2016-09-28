@@ -1,6 +1,8 @@
 package com.petservice.domain.pet;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -16,6 +18,8 @@ import java.util.List;
 @Service
 public class PetServiceImpl implements PetService {
 
+    private final String PETS_CACHE = "PETS_CACHE";
+
     private PetRepository petRepository;
 
     @Autowired
@@ -25,6 +29,7 @@ public class PetServiceImpl implements PetService {
 
 
     @Override
+    @Cacheable(PETS_CACHE)
     public List<Pet> findAll(String keyword, PetType petType) {
 
         // setup specifications
@@ -48,16 +53,19 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
+    @Cacheable(PETS_CACHE)
     public Pet findOne(Long id) {
         return petRepository.findOne(id);
     }
 
     @Override
+    @CacheEvict(value=PETS_CACHE, allEntries=true)
     public Pet save(Pet pet) {
         return petRepository.save(pet);
     }
 
     @Override
+    @CacheEvict(value=PETS_CACHE, allEntries=true)
     public void delete(Long id) {
         petRepository.delete(id);
     }

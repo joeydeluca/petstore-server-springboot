@@ -11,6 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.core.env.Environment;
 
 import java.util.Arrays;
@@ -19,6 +20,7 @@ import java.util.stream.Stream;
 /**
  * Created by Joe Deluca on 9/21/2016.
  */
+@EnableCaching
 @SpringBootApplication
 @EnableAutoConfiguration
 public class PetServiceApplication implements CommandLineRunner {
