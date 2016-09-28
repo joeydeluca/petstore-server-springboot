@@ -7,9 +7,9 @@ import org.springframework.data.jpa.domain.Specification;
  */
 public class PetSpecification {
 
-    public static Specification<Pet> descriptionContains(String keyword) {
+    public static Specification<Pet> titleContains(String keyword) {
         return (root, query, cb) -> {
-            return cb.like(cb.trim(cb.lower(root.get("description"))), "%"+keyword.toLowerCase().trim()+"%");
+            return cb.like(cb.trim(cb.lower(root.get("title"))), "%"+keyword.toLowerCase().trim()+"%");
         };
     }
 

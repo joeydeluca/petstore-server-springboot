@@ -29,13 +29,13 @@ public class PetServiceImpl implements PetService {
 
 
     @Override
-    @Cacheable(PETS_CACHE)
+    @Cacheable(value = PETS_CACHE)
     public List<Pet> findAll(String keyword, PetType petType) {
 
         // setup specifications
         List<Specification<Pet>> specifications = new ArrayList<>();
         if(keyword != null && keyword.length() > 0) {
-            specifications.add((PetSpecification.descriptionContains(keyword)));
+            specifications.add((PetSpecification.titleContains(keyword)));
         }
         if(petType != null) {
             specifications.add((PetSpecification.isPetType(petType)));
