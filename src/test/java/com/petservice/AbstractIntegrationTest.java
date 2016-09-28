@@ -1,6 +1,7 @@
 package com.petservice;
 
-import com.petservice.controllers.dtos.LoginDto;
+import com.petservice.controllers.dtos.AuthenticationRequestDto;
+import com.petservice.controllers.dtos.AuthenticationResponseDto;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.runner.RunWith;
@@ -33,16 +34,15 @@ public abstract class AbstractIntegrationTest {
     }
 
     public void adminLogin() {
-        LoginDto loginDto = new LoginDto();
-        loginDto.setUsername("admin");
-        loginDto.setPassword("admin");
+        AuthenticationRequestDto authenticationRequestDto = new AuthenticationRequestDto();
+        authenticationRequestDto.setUsername("admin");
+        authenticationRequestDto.setPassword("admin");
 
-        ResponseEntity<String> responseEntity = this.restTemplate.postForEntity("/login", loginDto, String.class);
+        ResponseEntity<AuthenticationResponseDto> responseEntity = this.restTemplate.postForEntity("/login", authenticationRequestDto, AuthenticationResponseDto.class);
 
         Assert.assertTrue(responseEntity.getStatusCode() == HttpStatus.OK);
 
-        String authToken  = responseEntity.getBody();
-        authToken = authToken.replace("Bearer ", "");
+        String authToken  = responseEntity.getBody().getToken();
 
         Assert.assertNotNull(authToken);
 

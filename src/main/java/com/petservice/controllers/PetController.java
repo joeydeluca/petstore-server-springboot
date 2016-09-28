@@ -1,5 +1,6 @@
 package com.petservice.controllers;
 
+import com.petservice.controllers.exceptions.ValidationException;
 import com.petservice.domain.pet.Pet;
 import com.petservice.domain.pet.PetService;
 import com.petservice.domain.pet.PetType;
@@ -11,6 +12,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.NoResultException;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +53,9 @@ public class PetController {
     public ResponseEntity<Pet> findOne(@PathVariable Long id) {
 
         Pet pet = petService.findOne(id);
+        if(pet == null) {
+            throw new IllegalArgumentException();
+        }
 
         return ResponseEntity.ok(pet);
     }
@@ -75,6 +80,10 @@ public class PetController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<Pet> update(@Valid @RequestBody Pet pet, BindingResult bindingResult) {
+
+        if(pet.getId() == null) {
+            throw new IllegalArgumentException();
+        }
 
         validateEntity(bindingResult);
 

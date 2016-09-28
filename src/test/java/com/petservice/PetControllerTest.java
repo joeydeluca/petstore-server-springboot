@@ -1,6 +1,5 @@
 package com.petservice;
 
-import com.petservice.controllers.ValidationException;
 import com.petservice.domain.pet.Pet;
 import com.petservice.domain.pet.PetType;
 import org.junit.Assert;
@@ -79,6 +78,7 @@ public class PetControllerTest extends AbstractIntegrationTest {
         adminLogin();
 
         Pet originalPet = getValidPetStub();
+        originalPet.setId(new Long(1));
         originalPet.setDescription("joeyisthecoolestguyintheworld");
 
         ResponseEntity<Pet> responseEntity = getRestTemplate().exchange("/pets", HttpMethod.PUT, getSecureRequest(originalPet), Pet.class, originalPet);

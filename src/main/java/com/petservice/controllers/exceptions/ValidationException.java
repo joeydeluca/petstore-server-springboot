@@ -1,4 +1,4 @@
-package com.petservice.controllers;
+package com.petservice.controllers.exceptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class ValidationException extends RuntimeException {
     private List errors = new ArrayList();
+
+    public ValidationException() {
+    }
 
     public ValidationException(List errors) {
         this.errors = errors;

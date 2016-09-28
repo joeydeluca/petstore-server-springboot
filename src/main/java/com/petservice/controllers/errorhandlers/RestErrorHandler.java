@@ -1,6 +1,6 @@
-package com.petservice.controllers;
+package com.petservice.controllers.errorhandlers;
 
-import org.hibernate.exception.ConstraintViolationException;
+import com.petservice.controllers.exceptions.ValidationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -19,13 +19,14 @@ public class RestErrorHandler {
     @ExceptionHandler(
             {
                     NoResultException.class,
-                    EmptyResultDataAccessException.class
+                    EmptyResultDataAccessException.class,
+                    IllegalArgumentException.class
             }
     )
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public ErrorResponse notFoundHandler(Exception e){
-        return new ErrorResponse(HttpStatus.NOT_FOUND, "Whatever you are looking for does not exist.");
+        return new ErrorResponse(HttpStatus.NOT_FOUND, "Not Found!");
     }
 
 

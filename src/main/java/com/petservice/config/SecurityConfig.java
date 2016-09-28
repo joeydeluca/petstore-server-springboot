@@ -1,4 +1,4 @@
-package com.petservice;
+package com.petservice.config;
 
 import com.petservice.domain.user.Role;
 import com.petservice.security.AuthenticationTokenFilter;

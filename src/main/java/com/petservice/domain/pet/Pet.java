@@ -38,7 +38,7 @@ public class Pet extends DomainEntity {
     private String photoUrl;
 
     @NotNull
-    @Min(0)
+    @Min(1)
     @Max(10000)
     @Column
     private double purchasePrice;

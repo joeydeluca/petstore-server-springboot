@@ -1,4 +1,4 @@
-package com.petservice.controllers;
+package com.petservice.controllers.errorhandlers;
 
 import org.springframework.http.HttpStatus;
 
