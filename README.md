@@ -29,6 +29,9 @@ The application itself is "persistent ignorant" and makes use of "Repositories" 
 <h4>Testing</h4>
 Automated tests are setup using maven.
 
+<h4>Cloud Deployment</h4>
+The SpringBoot app is Heroku Ready and contains the appropriate Procfile.
+
 <h4>Client<h4>
 The client is an Angular2 application located in a separate repo: https://github.com/joeydeluca/petstore-client-angular2
 
